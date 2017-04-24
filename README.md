@@ -34,7 +34,7 @@ Dalia,Wright,5126521872, 1951,
 Raju,Mehashi,5112987328, 08-31-1994, artist
 Mahelia,   Sanders,4018889151,08-22-1991,nurse
 Mike, Simpson, 5126218721, 02-11-1952, engineer
-Pete,,,,receptionist
+Pete,  Ott  ,,,receptionist
 ```
 
 #### code.py
@@ -113,11 +113,9 @@ Invalid row. Line 4: ['Raju', 'Mehashi', '5112987328', '08-31-1994', 'artist']
 Valid row. Line 5: ['Mahelia', 'Sanders', '4018889151', '08-22-1991', 'nurse']
 Invalid row. Line 6: ['Mike', 'Simpson', '5126218721', '02-11-1952', 'engineer']
 	Engineers must be born in April
-Invalid row. Line 7: ['Pete', '', '', '', 'receptionist']
-	Missing 'last name' value
+Invalid row. Line 7: ['Pete', 'Ott', '', '', 'receptionist']
 	Missing 'phone' value
 	Missing 'brithday' value
 	Occupation must be less than 10 characters
 	Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'
-	Employee not found on roster
   ```
