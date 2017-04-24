@@ -4,10 +4,10 @@ A CSV file validator written in Python.
 ## Key Features
 
 ### Field-level validation
-- Apply any boolean validation function taking a field value as its single argument
+- Declaratively apply any boolean validation function taking a field value as its single argument
 - Apply multiple field validation rules to each field
 ### Row-level validation
-- Apply any boolean validation function taking a row (a list of field values) as its single argument
+- Declaratively apply any boolean validation function taking a row (a list of field values) as its single argument
 - Apply multiple row validation rules to each row
 ### User-friendly error messages
 - Pair a custom user message with each validation rule
