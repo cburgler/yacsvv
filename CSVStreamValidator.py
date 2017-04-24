@@ -15,7 +15,7 @@ class CSVStreamValidator:
     
     Public methods
     validate_rows - Yield a RowStatus validation object for each data row in the csv file.
-    validate_header - Yield a RowStatus validation object for the header row.
+    validate_header - Return a RowStatus validation object for the header row.
     skip_header - Skip the header row.
     no_header - Specify that the csv file does not have a header row.
     '''
@@ -151,10 +151,10 @@ class CSVStreamValidator:
               
     def validate_header(self):
         '''
-        validate_header - Yield a RowStatus object for the header row. The header row is the first row. 
+        validate_header - Return a RowStatus object for the header row. The header row is the first row. 
             A header RowStatus object has the following attributes: 
             line_number - always 1
-            fields - list of header values
+            fields - list of header row values
             is_valid - True if the header is valid, False otherwise
             error_message - 'Unexpected headers:\n\tExpected: {}\n\tGot: {}' iff (is_valid == False), '' iff (is_valid == True)
             
