@@ -43,8 +43,6 @@ from datetime import datetime
 import io
 
 from CSVStreamValidator import CSVStreamValidator
-    
-MAX_ENGINEER_AGE = 30
 
 def is_valid_phone(phone):
     if len(phone) == 10 and phone.isdigit():
