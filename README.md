@@ -81,7 +81,7 @@ field_specs = [
     ('name', True, []),
     ('last name', True, []),
     ('phone', True, [(is_valid_phone, 'Phone number must be 10 digits')]),
-    ('brithday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
+    ('birthday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
     ('occupation', True, [(is_valid_job_length, 'Occupation must be less than 10 characters'),
                           (is_valid_job_title, "Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'")])]
 row_validations = [
@@ -115,7 +115,7 @@ Invalid row. Line 6: ['Mike', 'Simpson', '5126218721', '02-11-1952', 'engineer']
 	Engineers must be born in April
 Invalid row. Line 7: ['Pete', 'Ott', '', '', 'receptionist']
 	Missing 'phone' value
-	Missing 'brithday' value
+	Missing 'birthday' value
 	Occupation must be less than 10 characters
 	Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'
   ```
