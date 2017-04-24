@@ -13,7 +13,7 @@ A CSV file validator written in Python.
 - Apply any boolean validation function taking a row (a list of field values) as its single argument
 - Apply multiple row validation rules to each row
 ### Accessible validation results: 
-- Validation object generated for each row with attributes 'line_number', 'fields', 'is_valid', 'error_messages'
+- Validation object generated for each row with attributes `line_number`, `fields`, `is_valid`, `error_messages`
 ### Exhaustive validation testing: 
 - Apply all validation rules to each row and field wherever possible 
 - Multiple error messages per row
