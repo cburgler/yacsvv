@@ -42,7 +42,7 @@ Pete,,,,receptionist
 from datetime import datetime
 import io
 
-from CSVStreamValidator import CSVStreamValidator, RowStatus 
+from CSVStreamValidator import CSVStreamValidator
     
 MAX_ENGINEER_AGE = 30
 
@@ -91,7 +91,7 @@ row_validations = [
     (is_employee_on_roster, 'Employee not found on roster'),
     (is_valid_engineer_birthday, 'Engineers must be born in April')]
     
-with io.open('test2.csv', newline='') as csvfile:
+with io.open('test.csv', newline='') as csvfile:
     validator = CSVStreamValidator(csvfile, field_specs, row_validations=row_validations)
     validator.skip_header()
     for row in validator.validate_rows():
