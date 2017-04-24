@@ -18,6 +18,6 @@ A CSV file validator written in Python.
 ###### Apply all validation rules to each row and field wherever possible 
 ###### Multiple error messages per row
 #### Flexible csv file formats:
-###### Specify any csv dialect and formatting paremeters supported by the Python csv module
+###### Specify any csv dialect and formatting paremeters supported by the Python `csv` module
 #### Flexible, explicit header processing: 
 ###### Validate header, skip header, or no header
