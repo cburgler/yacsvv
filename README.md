@@ -23,10 +23,8 @@ A CSV file validator written in Python.
 ### Flexible, explicit header processing
 - Validate header, skip header, or no header
 
-# Tutorial
-In this tutorial we'll validate a sample csv file using `CSVStreamValidator`. We'll stop at each step to explain what's going on and describe how to use all of `CSVStreamValidator's` features. 
-
-First, let's see what an example usage looks like from beginning to end.
+# Example Usage
+Let's see what an example usage looks like from beginning to end.
 
 #### test.csv
 ```
@@ -41,7 +39,7 @@ Pete,,,,receptionist
 
 #### code.py
 ```
-from datetime import datetime, date
+from datetime import datetime
 import io
 
 from CSVStreamValidator import CSVStreamValidator, RowStatus 
@@ -77,13 +75,8 @@ def is_employee_on_roster(row):
         return True
     return False
 
-def get_age(birthday):
-    today = date.today()
-    return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
-
-def is_valid_engineer_age(row):
-    if (row[4] == 'engineer') and is_valid_birthday(row[3]) and \
-       (get_age(datetime.strptime(row[3], '%m-%d-%Y')) > MAX_ENGINEER_AGE):
+def is_valid_engineer_birthday(row):
+    if (row[4] == 'engineer') and is_valid_birthday(row[3]) and ((datetime.strptime(row[3], '%m-%d-%Y')).month != 4):
         return False
     return True        
 
@@ -96,9 +89,9 @@ field_specs = [
                           (is_valid_job_title, "Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'")])]
 row_validations = [
     (is_employee_on_roster, 'Employee not found on roster'),
-    (is_valid_engineer_age, 'Why is this engineer not a manager? No engineers over 30 allowed.')]
+    (is_valid_engineer_birthday, 'Engineers must be born in April')]
     
-with io.open('test.csv', newline='') as csvfile:
+with io.open('test2.csv', newline='') as csvfile:
     validator = CSVStreamValidator(csvfile, field_specs, row_validations=row_validations)
     validator.skip_header()
     for row in validator.validate_rows():
@@ -111,7 +104,6 @@ with io.open('test.csv', newline='') as csvfile:
 ```
 
 #### Output
-
 ```
 Invalid row. Line 2: ['Sarah', 'Hardy', '019287124331', '11-25-1979', 'plumber']
 	Phone number must be 10 digits
@@ -123,7 +115,7 @@ Invalid row. Line 4: ['Raju', 'Mehashi', '5112987328', '08-31-1994', 'artist']
 	Employee not found on roster
 Valid row. Line 5: ['Mahelia', 'Sanders', '4018889151', '08-22-1991', 'nurse']
 Invalid row. Line 6: ['Mike', 'Simpson', '5126218721', '02-11-1952', 'engineer']
-	Why is this engineer not a manager? No engineers over 30 allowed.
+	Engineers must be born in April
 Invalid row. Line 7: ['Pete', '', '', '', 'receptionist']
 	Missing 'last name' value
 	Missing 'phone' value
