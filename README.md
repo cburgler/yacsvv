@@ -39,10 +39,9 @@ Pete,,,,receptionist
 
 #### code.py
 ```
+from CSVStreamValidator import CSVStreamValidator
 from datetime import datetime
 import io
-
-from CSVStreamValidator import CSVStreamValidator
 
 def is_valid_phone(phone):
     if len(phone) == 10 and phone.isdigit():
