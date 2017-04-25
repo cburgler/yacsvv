@@ -14,7 +14,7 @@ A CSV file validator written in Python.
 ### Accessible validation results
 - Receive one validation object for each row of data; each validation object has the following attributes: `line_number`, `fields`, `is_valid`, `error_messages`
 ### Streaming
-- Suitable for very large csv files; yields one row validation object at a time
+- Suitable for very large csv files; validates one row at a time so memory is not an issue
 ### Exhaustive validation testing
 - Apply all validation rules to each row and field wherever possible 
 - Multiple error messages per row
