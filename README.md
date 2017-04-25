@@ -7,7 +7,7 @@ A CSV validator written in Python.
 - Declaratively apply any single-argument (`field_value`) boolean validation function to a field
 - Apply multiple field validation rules to each field
 ### Fully customizable row-level validation
-- Declaratively apply any single_argument (`row_value`) boolean validation function to a row
+- Declaratively apply any single-argument (`row_value`) boolean validation function to a row
 - Apply multiple row validation rules to each row
 ### User-friendly error messages
 - Pair a custom user message with each validation rule
@@ -19,7 +19,7 @@ A CSV validator written in Python.
 - Apply all validation rules to each row and field wherever possible 
 - Multiple error messages per row and field
 ### Flexible csv file formats
-- Specify any csv dialect and formatting paremeters supported by the Python `csv` module
+- Specify any csv dialect and formatting parameters supported by the Python `csv` module
 ### Flexible, explicit header processing
 - Validate header, skip header, or no header
 ### Compatible with both Python 2 & 3
