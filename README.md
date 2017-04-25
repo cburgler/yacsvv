@@ -32,19 +32,15 @@ Let's see what an example usage looks like from beginning to end.
 first_name,  last_name,   phone,  birthday,occupation
 Sarah, Hardy, 019287124331, 11-25-1979, plumber
 Dalia,Wright,5126521872, 1951,
-Raju,Mehashi,5112987328, 08-31-1994, artist
+Raju,Mehashi,08-31-1994, artist
 Mahelia,   Sanders,4018889151,08-22-1991,nurse
 Mike, Simpson, 5126218721, 02-11-1952, engineer
 Pete,  Ott  ,,,receptionist
 ```
 
-#### code.py
+#### validation_functions.py
 ```
-from CSV
-Validator import CSV
-Validator
 from datetime import datetime
-import io
 
 def is_valid_phone(phone):
     if len(phone) == 10 and phone.isdigit():
@@ -54,7 +50,7 @@ def is_valid_phone(phone):
 def is_valid_job_length(occupation):
     if len(occupation) < 10:
         return True
-    return False   
+    return False
 
 def is_valid_job_title(occupation):
     if occupation in ['artist', 'plumber', 'nurse', 'engineer']:
@@ -78,21 +74,31 @@ def is_employee_on_roster(row):
 def is_valid_engineer_birthday(row):
     if (row[4] == 'engineer') and is_valid_birthday(row[3]) and ((datetime.strptime(row[3], '%m-%d-%Y')).month != 4):
         return False
-    return True        
+    return True
+```
+
+#### myvalidator.py
+```
+import io
+from CSVValidator import CSVValidator
+from validation_functions import (is_valid_phone, is_valid_birthday, is_valid_job_length, is_valid_job_title,
+                                  is_employee_on_roster, is_valid_engineer_birthday)
 
 field_specs = [
     ('name', True, []),
     ('last name', True, []),
-    ('phone', True, [(is_valid_phone, 'Phone number must be 10 digits')]),
+    ('phone #', True, [(is_valid_phone, 'Phone # must be 10 digits')]),
     ('birthday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
     ('occupation', True, [(is_valid_job_length, 'Occupation must be less than 10 characters'),
-                          (is_valid_job_title, "Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'")])]
+                          (is_valid_job_title, "Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'")])
+    ]
 row_validations = [
     (is_employee_on_roster, 'Employee not found on roster'),
-    (is_valid_engineer_birthday, 'Engineers must be born in April')]
-    
-with io.open('test.csv', newline='') as csvfile:
-    validator = CSVStreamValidator(csvfile, field_specs, row_validations=row_validations)
+    (is_valid_engineer_birthday, 'Engineers must be born in April')
+    ]
+
+with io.open('sample.csv', newline='') as csvfile:
+    validator = CSVValidator(csvfile, field_specs, row_validations=row_validations)
     validator.skip_header()
     for row in validator.validate_rows():
         if row.is_valid:
@@ -106,18 +112,18 @@ with io.open('test.csv', newline='') as csvfile:
 #### Output
 ```
 Invalid row. Line 2: ['Sarah', 'Hardy', '019287124331', '11-25-1979', 'plumber']
-	Phone number must be 10 digits
+	Phone # must be 10 digits
 Invalid row. Line 3: ['Dalia', 'Wright', '5126521872', '1951', '']
 	Birthday must be a valid date of the form 'MM-DD-YYYY'
 	Missing 'occupation' value
 	Employee not found on roster
-Invalid row. Line 4: ['Raju', 'Mehashi', '5112987328', '08-31-1994', 'artist']
-	Employee not found on roster
+Invalid row. Line 4: ['Raju', 'Mehashi', '08-31-1994', 'artist']
+	Unexpected number of fields: Expected 5, Got 4
 Valid row. Line 5: ['Mahelia', 'Sanders', '4018889151', '08-22-1991', 'nurse']
 Invalid row. Line 6: ['Mike', 'Simpson', '5126218721', '02-11-1952', 'engineer']
 	Engineers must be born in April
 Invalid row. Line 7: ['Pete', 'Ott', '', '', 'receptionist']
-	Missing 'phone' value
+	Missing 'phone #' value
 	Missing 'birthday' value
 	Occupation must be less than 10 characters
 	Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'
