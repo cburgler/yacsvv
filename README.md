@@ -3,10 +3,10 @@ A CSV file validator written in Python.
 
 # Key Features
 
-### Field-level validation
+### Fully customizable field-level validation
 - Declaratively apply any boolean validation function taking a field value as its single argument
 - Apply multiple field validation rules to each field
-### Row-level validation
+### Fully customizable row-level validation
 - Declaratively apply any boolean validation function taking a row (a list of field values) as its single argument
 - Apply multiple row validation rules to each row
 ### User-friendly error messages
@@ -22,6 +22,7 @@ A CSV file validator written in Python.
 - Specify any csv dialect and formatting paremeters supported by the Python `csv` module
 ### Flexible, explicit header processing
 - Validate header, skip header, or no header
+### Compatible with both Python 2 & 3
 
 # Example Usage
 Let's see what an example usage looks like from beginning to end.
