@@ -43,7 +43,7 @@ def is_valid_engineer_birthday(row):
     return True       
 
 field_specs = [
-    ('name', True, []),
+    ('first name', True, []),
     ('last name', True, []),
     ('phone', True, [(is_valid_phone, 'Phone number must be 10 digits')]),
     ('brithday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
