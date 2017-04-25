@@ -13,12 +13,16 @@ class CSVValidator:
     '''
     CSVValidator - Orchestrate csv file validation.
     
-    Public methods
-    validate_rows - Yield a RowStatus validation object for each data row in the csv file.
-    validate_header - Return a RowStatus validation object for the header row.
-    skip_header - Skip the header row.
-    no_header - Specify that the csv file does not have a header row.
+    CSVValidator defines a public method 'validate_rows' which yields a RowStatus validation object for each data row 
+    in the csv file.
+    
+    Three public header methods are also defined. Exactly one of these three header methods must be called only once 
+    prior to calling 'validate_rows', subject to a RuntimeError. These header methods are:
+        validate_header - Return a RowStatus validation object for the header row.
+        skip_header - Skip the header row.
+        no_header - Specify that the csv file does not have a header row.
     '''
+    
     def __init__(self, csv_file, field_specs, row_validations=[], strip_whitespace=True, allow_empty_rows=True, 
                  header_fields=[], **kwargs):
         '''
