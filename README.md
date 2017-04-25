@@ -85,7 +85,7 @@ from validation_functions import (is_valid_phone, is_valid_birthday, is_valid_jo
                                   is_employee_on_roster, is_valid_engineer_birthday)
 
 field_specs = [
-    ('name', True, []),
+    ('first name', True, []),
     ('last name', True, []),
     ('phone #', True, [(is_valid_phone, 'Phone # must be 10 digits')]),
     ('birthday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
