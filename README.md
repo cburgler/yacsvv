@@ -27,7 +27,7 @@ A CSV validator written in Python.
 # Example Usage
 Let's see what an example usage looks like from beginning to end.
 
-#### test.csv
+#### sample.csv
 ```
 first_name,  last_name,   phone,  birthday,occupation
 Sarah, Hardy, 019287124331, 11-25-1979, plumber
