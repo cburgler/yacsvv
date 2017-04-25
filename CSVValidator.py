@@ -1,5 +1,5 @@
 '''
-CSVStreamValidator.py - Define the CSVStreamValidator class used to validate csv files.
+CSVValidator.py - Define the CSVValidator class used to validate csv files.
 '''
 from collections import namedtuple
 import csv
@@ -9,9 +9,9 @@ FieldSpec = namedtuple('FieldSpec', 'name is_required validation_rules')
 RowStatus = namedtuple('RowStatus', 'line_number fields is_valid error_messages')
 
 
-class CSVStreamValidator:
+class CSVValidator:
     '''
-    CSVStreamValidator - Orchestrate csv file validation.
+    CSVValidator - Orchestrate csv file validation.
     
     Public methods
     validate_rows - Yield a RowStatus validation object for each data row in the csv file.
@@ -44,7 +44,7 @@ class CSVStreamValidator:
         strip_whitespace - if True, leading and trailing whitespace is removed from all field and header values
         allow_empty_rows - if True, a row with no fields (ie a line containing only a new line character) is valid.
             Otherwise, a row with no fields is invalid.
-        header_fields - List of valid header values. Only used by CSVStreamValidator.validate_header().
+        header_fields - List of valid header values. Only used by CSVValidator.validate_header().
         kwargs - Any keyword arguments supported by 'csv.reader'
         
         Exception raised
