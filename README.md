@@ -1,5 +1,5 @@
-# CSVStreamValidator
-A CSV file validator written in Python.
+# CSVValidator
+A CSV validator written in Python.
 
 # Key Features
 
@@ -14,7 +14,7 @@ A CSV file validator written in Python.
 ### Accessible validation results
 - Receive one validation object for each row of data. Each validation object has the following attributes: `line_number`, `fields`, `is_valid`, `error_messages`
 ### Streaming
-- Suitable for very large csv files. `CSVStreamValidator` validates one row at a time so memory is not an issue.
+- Suitable for very large csv files. `CSVValidator` validates one row at a time so memory is not an issue.
 ### Exhaustive validation testing
 - Apply all validation rules to each row and field wherever possible 
 - Multiple error messages per row
@@ -40,7 +40,8 @@ Pete,  Ott  ,,,receptionist
 
 #### code.py
 ```
-from CSVStreamValidator import CSVStreamValidator
+from CSV
+Validator import CSVStreamValidator
 from datetime import datetime
 import io
 
