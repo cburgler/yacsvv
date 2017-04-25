@@ -12,7 +12,7 @@ A CSV file validator written in Python.
 ### User-friendly error messages
 - Pair a custom user message with each validation rule
 ### Accessible validation results
-- Validation object generated for each row with attributes `line_number`, `fields`, `is_valid`, `error_messages`
+- Receive a validation object for each row; each validation object has the following attributes: `line_number`, `fields`, `is_valid`, `error_messages`
 ### Streaming
 - Suitable for very large csv files; yields one row validation object at a time
 ### Exhaustive validation testing
