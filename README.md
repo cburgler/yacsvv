@@ -86,8 +86,8 @@ from validation_functions import (is_valid_phone, is_valid_birthday, is_valid_jo
 field_specs = [
     ('name', True, []),
     ('last name', True, []),
-    ('phone #', True, [(is_valid_phone, 'Phone number must be 10 digits')]),
-    ('brithday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
+    ('phone #', True, [(is_valid_phone, 'Phone # must be 10 digits')]),
+    ('birthday', True, [(is_valid_birthday, 'Birthday must be a valid date of the form \'MM-DD-YYYY\'')]),
     ('occupation', True, [(is_valid_job_length, 'Occupation must be less than 10 characters'),
                           (is_valid_job_title, "Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'")])
     ]
@@ -111,7 +111,7 @@ with io.open('sample.csv', newline='') as csvfile:
 #### Output
 ```
 Invalid row. Line 2: ['Sarah', 'Hardy', '019287124331', '11-25-1979', 'plumber']
-	Phone number must be 10 digits
+	Phone # must be 10 digits
 Invalid row. Line 3: ['Dalia', 'Wright', '5126521872', '1951', '']
 	Birthday must be a valid date of the form 'MM-DD-YYYY'
 	Missing 'occupation' value
@@ -123,7 +123,7 @@ Invalid row. Line 6: ['Mike', 'Simpson', '5126218721', '02-11-1952', 'engineer']
 	Engineers must be born in April
 Invalid row. Line 7: ['Pete', 'Ott', '', '', 'receptionist']
 	Missing 'phone #' value
-	Missing 'brithday' value
+	Missing 'birthday' value
 	Occupation must be less than 10 characters
 	Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'
   ```
