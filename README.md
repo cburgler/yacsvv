@@ -1,8 +1,7 @@
 # yacsvv
 A CSV validator written in Python.
 
-# Key Features
-
+# Highlights
 ### Fully customizable field-level validation rules
 - Declaratively apply any single-argument (`field_value`) boolean validation function to a field
 - Apply multiple field validation rules to each field
