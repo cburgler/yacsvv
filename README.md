@@ -84,6 +84,15 @@ from CSVValidator import CSVValidator
 from validation_functions import (is_valid_phone, is_valid_birthday, is_valid_job_length, is_valid_job_title,
                                   is_employee_on_roster, is_valid_engineer_birthday)
 
+# Define field specs. Each field spec is a tuple of the form (
+#    name - user-friendly field name used in error reporting, may be different than the field header value
+#    is_required - if True, a row is invalid if the field does not have a value
+#    list of (field validation function, error message) tuples, where
+#        field_validation_function - a function that accepts the field value as its only argument; a row is
+#            invalid if field_validation_function returns False
+#        error_message - user-friendly description of the field validation rule and/or error condition 
+#    )
+# The order of each field spec tuple is the order of the fields in the csv file.
 field_specs = [
     ('first name', True, []),
     ('last name', True, []),
@@ -92,11 +101,18 @@ field_specs = [
     ('occupation', True, [(is_valid_job_length, 'Occupation must be less than 10 characters'),
                           (is_valid_job_title, "Occupation must be 'artist', 'plumber', 'nurse' or 'engineer'")])
     ]
+    
+# Define row specs. Each row spec is a tuple of the form (
+#     row_validation_function - a function that accepts the row (a list of field values) as its only 
+#         argument; a row is invalid if row_validation_function returns False
+#     error_message - user-friendly description of the row validation rule and/or error condition 
+#     )
 row_validations = [
     (is_employee_on_roster, 'Employee not found on roster'),
     (is_valid_engineer_birthday, 'Engineers must be born in April')
     ]
 
+# validate 'sample.csv'
 with io.open('sample.csv', newline='') as csvfile:
     validator = CSVValidator(csvfile, field_specs, row_validations=row_validations)
     validator.skip_header()
