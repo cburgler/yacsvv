@@ -24,7 +24,7 @@ A CSV validator written in Python.
 ### Compatible with both Python 2 & 3
 
 # Example Usage
-Let's see what an example usage looks like from beginning to end. The [docstrings](./CSVValidator.py) will go a long way to answering any questions you may have. Watch this space for a detailed tutorial.
+Let's see what an example usage looks like from beginning to end. The [docstrings](./CSVValidator.py) will go a long way to answering any questions you may have.
 
 One thing to keep in mind is that though this example prints validation data in a specific format, `yacsvv` generates a validation object for each row of data that can be used any way you see fit. The validation object contains the row line number, row field values, a boolean indicating valid/invalid, and a list of error messages (one for each unmet validation criteria).
 
