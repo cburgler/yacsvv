@@ -24,7 +24,9 @@ A CSV validator written in Python.
 ### Compatible with both Python 2 & 3
 
 # Example Usage
-Let's see what an example usage looks like from beginning to end.
+Let's see what an example usage looks like from beginning to end. The [docstrings](./CSVValidator.py) will go a long way to answering any questions you may have. Watch this space for a detailed tutorial.
+
+One thing to keep in mind is that though this example prints validation data in a specific format, `yacsvv` generates a validation object for each row of data that can be used any way you see fit. The validation object contains the row line number, row field values, a boolean indicating valid/invalid, and a list of error messages (one for each unmet validation criteria).
 
 #### sample.csv
 ```
@@ -37,7 +39,7 @@ Mike, Simpson, 5126218721, 02-11-1952, engineer
 Pete,  Ott  ,,,receptionist
 ```
 
-#### validation_functions.py
+#### _validation_functions.py
 ```
 from datetime import datetime
 
@@ -79,9 +81,10 @@ def is_valid_engineer_birthday(row):
 #### myvalidator.py
 ```
 import io
+from _validation_functions import (is_valid_phone, is_valid_birthday, is_valid_job_length, is_valid_job_title,
+                                   is_employee_on_roster, is_valid_engineer_birthday)
 from CSVValidator import CSVValidator
-from validation_functions import (is_valid_phone, is_valid_birthday, is_valid_job_length, is_valid_job_title,
-                                  is_employee_on_roster, is_valid_engineer_birthday)
+
 
 field_specs = [
     ('first name', True, []),
