@@ -3,10 +3,10 @@ A CSV validator written in Python.
 
 # Highlights
 ### Fully customizable field-level validation rules
-- Declaratively apply any single-argument (`field_value`) boolean validation function to a field
+- Declaratively apply any single-argument (`:arg field_value`) boolean validation function to a field
 - Apply multiple field validation rules to each field
 ### Fully customizable row-level validation rules
-- Declaratively apply any single-argument (`row_value`) boolean validation function to a row
+- Declaratively apply any single-argument (`arg: row_value`) boolean validation function to a row
 - Apply multiple row validation rules to each row
 ### Fully customizable error messages
 - Pair a custom user message with each validation rule
