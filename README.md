@@ -2,16 +2,16 @@
 A CSV validator written in Python.
 
 # Highlights
-### Fully customizable field-level validation rules
+### Fully customizable field-level validation
 - Declaratively apply any single-argument (`field_value`) boolean validation function to a field
 - Apply multiple field validation rules to each field
-### Fully customizable row-level validation rules
+### Fully customizable row-level validation
 - Declaratively apply any single-argument (`row_value`) boolean validation function to a row
 - Apply multiple row validation rules to each row
 ### Fully customizable error messages
 - Pair a custom user message with each validation rule
 ### Accessible validation results
-- Receive one validation object for each row of data. Each validation object has the following attributes: `line_number`, `fields`, `is_valid`, `error_messages`
+- Receive one validation object for each row of data containing the line number, field values, validity indicator, and a list of error messages (one for each unmet validation criteria).
 ### Streaming
 - Suitable for very large csv files. `yacsvv` lazily validates one row at a time so memory is not an issue.
 ### Exhaustive validation testing
