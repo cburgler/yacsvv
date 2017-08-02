@@ -1,5 +1,5 @@
 # yacsvv
-A CSV validator written in Python.
+Yet another CSV validator
 
 # Highlights
 ### Fully customizable field-level validation rules
