@@ -5,6 +5,7 @@ from collections import namedtuple
 import csv
 import io
 
+
 FieldSpec = namedtuple('FieldSpec', 'name is_required validation_rules')
 RowStatus = namedtuple('RowStatus', 'line_number fields is_valid error_messages')
 
@@ -65,45 +66,6 @@ class CSVValidator:
         
         self._csv_reader = csv.reader(csv_file, **kwargs) 
             
-    def _validate_field_count(self, row):
-        '''
-        _validate_field_count - Return (True, '') if the given row has the expected number of fields.
-                                Return (False, error_message) otherwise.
-        '''
-        row_field_count = len(row)
-        if row_field_count != self._expected_field_count:
-            return (False, 'Unexpected number of fields: Expected {}, Got {}'.format(self._expected_field_count, row_field_count))
-        return (True, '')  
-            
-    def _validate_row(self, row):
-        '''
-        _validate_row - Return a RowStatus object for the given row. 
-        '''
-        if (not row) and self._allow_empty_rows:
-            return RowStatus(self._line_number, row, True, [])
-        valid_field_count, error_message = self._validate_field_count(row)
-        if not valid_field_count:
-            return RowStatus(self._line_number, row, False, [error_message])
-        row_errors = []
-        for (field_spec, value) in zip(self._field_specs, row):
-            if field_spec.is_required and (not value):
-                row_errors.append('Missing \'{}\' value'.format(field_spec.name))
-            elif value and field_spec.validation_rules:
-                row_errors.extend(self._get_field_validation_errors(field_spec.validation_rules, value))
-        row_errors.extend(self._get_row_validation_errors(row))
-        if row_errors:
-            return RowStatus(self._line_number, row, False, row_errors)
-        else:
-            return RowStatus(self._line_number, row, True, [])
-            
-    def _verify_header_processing_status(self):
-        '''
-        _verify_header_processing_status - Raise a RunTimeError if the header has not yet been processed by a
-            header method.
-        '''
-        if not self._header_processed:
-            raise RuntimeError('One of \'validate_header\', \'skip_header\', or \'no_header\' must be called ' +\
-                               'prior to data row validation.')
     
     def validate_rows(self):
         '''
@@ -125,34 +87,38 @@ class CSVValidator:
             if self._strip_whitespace:
                 row = [r.strip() for r in row]
             yield self._validate_row(row)
+                
     
-    def _set_header_process_status(self):
-        if self._header_processed:
-            raise RuntimeError('Only one header method may be called per csv file.')
+    def _get_field_validation_errors(self, field_validations, value):
+        return [error_message for (validator, error_message) in field_validations if not validator(value)] 
+    
+    
+    def _get_row_validation_errors(self, row):
+        return [error_message for (validator, error_message) in self._row_validations if not validator(row)]    
+        
+    
+    def _validate_row(self, row):
+        '''
+        _validate_row - Return a RowStatus object for the given row. 
+        '''
+        if (not row) and self._allow_empty_rows:
+            return RowStatus(self._line_number, row, True, [])
+        valid_field_count, error_message = self._validate_field_count(row)
+        if not valid_field_count:
+            return RowStatus(self._line_number, row, False, [error_message])
+        row_errors = []
+        for (field_spec, value) in zip(self._field_specs, row):
+            if field_spec.is_required and (not value):
+                row_errors.append('Missing \'{}\' value'.format(field_spec.name))
+            elif value and field_spec.validation_rules:
+                row_errors.extend(self._get_field_validation_errors(field_spec.validation_rules, value))
+        row_errors.extend(self._get_row_validation_errors(row))
+        if row_errors:
+            return RowStatus(self._line_number, row, False, row_errors)
         else:
-            self._header_processed = True
-                    
-    def no_header(self):
-        '''
-        no_header - Specify that this csv file does not have a header row.
-        
-        Exception raised
-            RuntimeError - Raised if a header method has already been called.
-        '''
-        self._set_header_process_status()
-              
-    def skip_header(self):
-        '''
-        skip_header - Skip the header row. The header row is the first row.
-        
-        Exceptions raised 
-            RuntimeError - Raised if a header method has already been called.
-            csv.Error
-        '''
-        self._set_header_process_status()
-        next(self._csv_reader)
-        self._line_number += 1
-              
+            return RowStatus(self._line_number, row, True, [])
+    
+    
     def validate_header(self):
         '''
         validate_header - Return a RowStatus object for the header row. The header row is the first row. 
@@ -176,9 +142,53 @@ class CSVValidator:
             return RowStatus(self._line_number, header, False, error_message)
         return RowStatus(self._line_number, header, True, '')
     
-    def _get_field_validation_errors(self, field_validations, value):
-        return [error_message for (validator, error_message) in field_validations if not validator(value)] 
     
-    def _get_row_validation_errors(self, row):
-        return [error_message for (validator, error_message) in self._row_validations if not validator(row)]                
-                
+    def skip_header(self):
+        '''
+        skip_header - Skip the header row. The header row is the first row.
+        
+        Exceptions raised 
+            RuntimeError - Raised if a header method has already been called.
+            csv.Error
+        '''
+        self._set_header_process_status()
+        next(self._csv_reader)
+        self._line_number += 1
+    
+    
+    def no_header(self):
+        '''
+        no_header - Specify that this csv file does not have a header row.
+        
+        Exception raised
+            RuntimeError - Raised if a header method has already been called.
+        '''
+        self._set_header_process_status()
+    
+    
+    def _validate_field_count(self, row):
+        '''
+        _validate_field_count - Return (True, '') if the given row has the expected number of fields.
+                                Return (False, error_message) otherwise.
+        '''
+        row_field_count = len(row)
+        if row_field_count != self._expected_field_count:
+            return (False, 'Unexpected number of fields: Expected {}, Got {}'.format(self._expected_field_count, row_field_count))
+        return (True, '')  
+            
+
+    def _verify_header_processing_status(self):
+        '''
+        _verify_header_processing_status - Raise a RunTimeError if the header has not yet been processed by a
+            header method.
+        '''
+        if not self._header_processed:
+            raise RuntimeError('One of \'validate_header\', \'skip_header\', or \'no_header\' must be called ' +\
+                               'prior to data row validation.')
+    
+
+    def _set_header_process_status(self):
+        if self._header_processed:
+            raise RuntimeError('Only one header method may be called per csv file.')
+        else:
+            self._header_processed = True
